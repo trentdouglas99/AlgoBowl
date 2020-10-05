@@ -10,9 +10,14 @@ f = open(file_name, "w")
 print("...writing to file " + file_name + "...")
 f.write(str(number_of_points) + "\n")
 f.write(str(k) + "\n")
-for i in range(0,number_of_points):
-    f.write(str(random.randint(-1000,1000)) + " " + str(random.randint(-1000,1000)) + " " + str(random.randint(-1000,1000)))
-    if(i != number_of_points-1):
+set_of_points = []
+while len(set_of_points) < number_of_points:
+    new_point = [random.randint(-1000,1000), random.randint(-1000,1000), random.randint(-1000,1000)]
+    if new_point not in set_of_points:
+        set_of_points.append(new_point)
+for i in range(len(set_of_points)):
+    f.write(str(set_of_points[i][0]) + " " + str(set_of_points[i][1]) + " " + str(set_of_points[i][2]))
+    if i != len(set_of_points)-1:
         f.write("\n")
 f.close()
 print("...done!")
