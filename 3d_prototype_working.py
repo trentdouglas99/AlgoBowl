@@ -1,9 +1,10 @@
 import numpy
 
 class point:
-    def __init__(self, x_loc, y_loc, ind, set):
+    def __init__(self, x_loc, y_loc, z_loc, ind, set):
         self.x_loc = x_loc
         self.y_loc = y_loc
+        self.z_loc = z_loc
         self.ind   = ind
         self.set   = set
 
@@ -13,9 +14,10 @@ def initialize_items(Lines):
         if i > 1:
             x_loc    = Lines[i].split()[0]
             y_loc    = Lines[i].split()[1]
+            z_loc    = Lines[i].split()[2]
             item_ind = i-1
-            set = 0
-            obj_list.append(point(int(x_loc),int(y_loc),item_ind, set))
+            set      = 0
+            obj_list.append(point(int(x_loc),int(y_loc), int(z_loc), item_ind, set))
     return obj_list
 
 def get_num_items(Lines):
@@ -28,13 +30,13 @@ def get_num_sets(Lines):
 
 def print_points(obj_list):
     for i in range(0, len(obj_list)):
-        print("Point", obj_list[i].ind, ": x_loc:", obj_list[i].x_loc, " y_loc:", obj_list[i].y_loc)
+        print("Point", obj_list[i].ind, ": x_loc:", obj_list[i].x_loc, " y_loc:", obj_list[i].y_loc, " z_loc:", obj_list[i].z_loc)
 
 def create_mat(obj_list, num_items):
     dist_mat = numpy.zeros(shape=(num_items, num_items))
     for i in range(0, num_items):
         for j in range(0, num_items):
-            dist_mat[i, j] = (abs(obj_list[i].y_loc - obj_list[j].y_loc) + abs(obj_list[i].x_loc - obj_list[j].x_loc))
+            dist_mat[i, j] = (abs(obj_list[i].y_loc - obj_list[j].y_loc) + abs(obj_list[i].x_loc - obj_list[j].x_loc) + abs(obj_list[i].z_loc - obj_list[j].z_loc))
     return dist_mat
 
 def get_initial_papas(dist_mat, num_items):
@@ -107,7 +109,7 @@ def find_max_min(all_sets, dist_mat, num_sets, num_items):
     return max_min
 
 def run_algo(filepath):
-    text_file = open("text_for_plzwork.txt", "r")
+    text_file = open(filepath, "r")
     lines = text_file.readlines()
     num_items = get_num_items(lines)
     num_sets = get_num_sets(lines)
@@ -123,4 +125,4 @@ def run_algo(filepath):
     print(max_min)
     print(all_sets)
 
-run_algo("text_for_plzwork.txt")
+run_algo("6_points.txt")
