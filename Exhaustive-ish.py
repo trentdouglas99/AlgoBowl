@@ -10,7 +10,7 @@ class subsets_and_averages:
         self.average_point = average_point
 
 
-f = open("10_points.txt")
+f = open("20_points.txt")
 testInput = []
 n = int(f.readline())
 k = int(f.readline())
@@ -25,12 +25,6 @@ for x in f:
   points.append(point)
 
 f.close()
-
-# print(n)
-# print(k)
-# for i in points:
-#     print(i)
-
 testInput = points
 
 def powerSet(items):
@@ -136,6 +130,8 @@ def add_leftovers(list_of_papas, leftovers):
     min_distance = 10000
     papa_group = list_of_papas[0]
     for leftover in leftovers:
+        min_distance = 10000
+        papa_group = list_of_papas[0]
         leftover_x = leftover[0]
         leftover_y = leftover[1]
         leftover_z = leftover[2]
@@ -152,8 +148,55 @@ def add_leftovers(list_of_papas, leftovers):
                 papa_group = papa
         list_of_papas[list_of_papas.index(papa_group)].subset.append(leftover)
 
+        list_of_papas[list_of_papas.index(papa_group)].average_point = average_point_only(list_of_papas[list_of_papas.index(papa_group)].subset)
+
+
     return list_of_papas
 
+
+
+def average_point_only(list_of_points):
+    xs = []
+    ys = []
+    zs = []
+
+    for point in list_of_points:
+        xs.append(point[0])
+        ys.append(point[1])
+        zs.append(point[2])
+    x_mean = statistics.mean(xs)
+    y_mean = statistics.mean(ys)
+    z_mean = statistics.mean(zs)
+
+    return [x_mean, y_mean, z_mean]
+
+def calcDistance(finalSet):
+    distances = []
+    for group in finalSet:
+        fakeFinal = group.subset
+        for i in range(len(fakeFinal)):
+            fakefakeFinal = []
+            for aaaa in fakeFinal:
+                fakefakeFinal.append(aaaa)
+
+            poi = fakeFinal[i]
+            fakefakeFinal.remove(fakeFinal[i])
+            for j in range(len(fakefakeFinal)):
+                poi_x = poi[0]
+                poi_y = poi[1]
+                poi_z = poi[2]
+                compare_point_x = fakefakeFinal[j][0]
+                compare_point_y = fakefakeFinal[j][1]
+                compare_point_z = fakefakeFinal[j][2]
+                x_difference = abs(poi_x - compare_point_x)
+                y_difference = abs(poi_y - compare_point_y)
+                z_difference = abs(poi_z - compare_point_z)
+                euclidian_distance = math.sqrt(pow(x_difference, 2) + pow(y_difference, 2) + pow(z_difference, 2))
+                distances.append(euclidian_distance)
+            fakefakeFinal = []
+            for aaaa in fakeFinal:
+                fakefakeFinal.append(aaaa)
+    return distances
 
 powerSet = powerSet(testInput)
 clean_power_set = removenullSetAndSingles(powerSet)
@@ -167,6 +210,11 @@ finalSet = add_leftovers(list_of_papas, leftovers)
 for papa in list_of_papas:
     print(papa.average_point)
 
+print("\n")
 for i in finalSet:
     print(i.subset)
 
+
+distance_max = calcDistance(finalSet)
+
+print(max(distance_max))
