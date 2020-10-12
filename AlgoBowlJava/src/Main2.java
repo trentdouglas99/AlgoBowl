@@ -202,7 +202,7 @@ public class Main2 {
 		System.out.println("L Array: " +lArray + " " + maxIndex + " " + lArray.get(maxIndex));
 		
 		
-		long loopSize = 40000000;
+		long loopSize = 800000;
 		long fuelCounter = loopSize;
 		System.out.println("Entering loop");
 		Random rand = new Random();
@@ -229,7 +229,7 @@ public class Main2 {
 			//randomDecision = 5;
 			//fuelCounter % 7 != 0
 			// randomDecision > 0
-			if(randomDecision > 0) {
+			if(fuelCounter % 8 != 0) {
 				
 				
 	//			System.out.println(randomNumber1 + " " + randomNumber2);
@@ -294,7 +294,7 @@ public class Main2 {
 				
 				//System.out.println("LMs: " + localMax1 + " " + localMax2);
 				//System.out.println("Old: " + lArray.get(randomNumber1) + " " + lArray.get(randomNumber2));
-				long randomNumber = rand.nextInt(100) + 1;
+				long randomNumber = rand.nextInt(100);
 				if(localMax1 <= lArray.get(randomNumber1) && localMax2 <= lArray.get(randomNumber2)) {
 					//System.out.println(array3);
 					for(int m = 0; m < array3.get(randomNumber1).size(); m++) {
@@ -315,9 +315,9 @@ public class Main2 {
 					lArray.set(randomNumber1, localMax1);
 					lArray.set(randomNumber2, localMax2);
 				} 
-//				else if (randomNumber < 0.07*(Double.valueOf(fuelCounter)/loopSize)) {
+//				else if (randomNumber < (1*(Double.valueOf(fuelCounter)/loopSize) - 0.5)) {
 //					Double amount = 1*(Double.valueOf(fuelCounter)/loopSize);
-//					System.out.println(amount);
+//					//System.out.println(amount);
 //					for(int m = 0; m < array3.get(randomNumber1).size(); m++) {
 //						int currentPoint = array3.get(randomNumber1).get(m);
 //						if(currentPoint == randomNumber11) {
@@ -639,14 +639,16 @@ public class Main2 {
 		System.out.println(array3);
 		
 		
+		FileWriter myWriter1 = new FileWriter("1000_points_output.txt");
+		myWriter1.write("");
+		myWriter1.close();
 		FileWriter myWriter = new FileWriter("1000_points_output.txt");
-		
 		myWriter.write(maxL+"\n");
 		for(int i = 0; i < array3.size(); i++) {
 			ArrayList<Integer> current = array3.get(i);
 			for(int j = 0; j < current.size(); j++) {
 				//System.out.print(current.get(j));
-				myWriter.write(current.get(j).toString());
+				myWriter.write(String.valueOf(current.get(j) + 1));
 				if(j != current.size() - 1) {
 					myWriter.write(" ");
 					//System.out.print(" ");

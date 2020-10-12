@@ -44,7 +44,7 @@ public class Verifier {
 				pointArray.add(array[i]);
 				pointCounter++;
 				for(int j = i + 1; j < array.length; j++) {
-					if(Main2.manDistance(pArray.get(Integer.parseInt(array[i])), pArray.get(Integer.parseInt(array[j]))) > max_distance) {
+					if(Main2.manDistance(pArray.get(Integer.parseInt(array[i])-1), pArray.get(Integer.parseInt(array[j])-1)) > max_distance) {
 						System.out.println("Max distance too low");
 						System.out.println(Main2.manDistance(pArray.get(Integer.parseInt(array[i])), pArray.get(Integer.parseInt(array[j]))));
 						return;
@@ -52,6 +52,8 @@ public class Verifier {
 				}
 			}
 		}
+		
+		out_sc.close();
 		if(lineCounter != k) {
 			
 			System.out.println("Incorrect Number of Sets");
