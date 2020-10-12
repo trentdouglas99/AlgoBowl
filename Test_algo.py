@@ -1,5 +1,7 @@
 import math
 import statistics
+import numpy as np
+import matplotlib.pyplot as plt
 from operator import attrgetter
 class subsets_and_averages:
     def __init__(self, subset, average, average_point):
@@ -7,7 +9,7 @@ class subsets_and_averages:
         self.average = average
         self.average_point = average_point
 
-testInput = [[1,1],[-3,2],[9,-5],[3,-6],[-2,0],[-4,-6],[-1,-1],[0,0],[-7,5],[-1,9]]
+testInput = [[1,1],[-3,2],[9,-5],[3,-6],[-2,0],[-4,-6],[-1,-1],[0,0],[-7,5],[-1,9], [15,2],[-13,7],[-9,-5],[23,-10],[-12,32],[24,-5],[-6,-6],[9,-12],[-10,5],[-7,2]]
 
 def powerSet(items):
 
@@ -109,6 +111,9 @@ def add_leftovers(list_of_papas, leftovers):
             if(euclidian_distance < min_distance):
                 min_distance = euclidian_distance
                 papa_group = papa
+        list_of_papas[list_of_papas.index(papa_group)].subset.append(leftover)
+
+    return list_of_papas
 
 
 k = input ("pick k: ")
@@ -119,13 +124,12 @@ clean_power_set = removenullSetAndSingles(powerSet)
 clean_power_set_with_distances = calcComboDistances(clean_power_set)
 sorted_clean_power_set_with_distances = sorted(clean_power_set_with_distances, key=attrgetter('average'))
 list_of_papas = pickPapas(k, sorted_clean_power_set_with_distances)
-
-for i in list_of_papas:
-    print(i.subset)
-    #print(i.average_point)
-    #print(str(i.average))
-
 leftovers = removeChosenPoints(testInput, list_of_papas)
-
 finalSet = add_leftovers(list_of_papas, leftovers)
+
+for i in leftovers:
+    print(i)
+
+# for i in finalSet:
+#     print(i.subset)
 
