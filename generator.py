@@ -11,7 +11,7 @@ f.write(str(k) + "\n")
 set_of_points = []
 print("...generating " + str(number_of_points) + " points...")
 while len(set_of_points) < number_of_points:
-    new_point = [random.randint(-1000,1000), random.randint(-1000,1000), random.randint(-1000,1000)]
+    new_point = [random.randint(0,0), random.randint(-1000,1000), random.randint(-1000,1000)]
     if new_point not in set_of_points:
         set_of_points.append(new_point)
 print("...writing to file " + file_name + "...")
