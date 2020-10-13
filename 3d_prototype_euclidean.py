@@ -36,15 +36,17 @@ def create_mat(obj_list, num_items):
     dist_mat = numpy.zeros(shape=(num_items, num_items))
     for i in range(0, num_items):
         for j in range(0, num_items):
-            dist_mat[i, j] = (abs(obj_list[i].y_loc - obj_list[j].y_loc) + abs(obj_list[i].x_loc - obj_list[j].x_loc) + abs(obj_list[i].z_loc - obj_list[j].z_loc))
+            dist_mat[i, j] = numpy.sqrt(numpy.power(obj_list[i].y_loc - obj_list[j].y_loc, 2) + numpy.power(obj_list[i].x_loc - obj_list[j].x_loc,2) + numpy.power(obj_list[i].z_loc - obj_list[j].z_loc,2))
     return dist_mat
 
 def create_mat_e(obj_list, num_items):
     dist_mat = numpy.zeros(shape=(num_items, num_items))
     for i in range(0, num_items):
         for j in range(0, num_items):
-            dist_mat[i, j] = numpy.sqrt(numpy.power(obj_list[i].y_loc - obj_list[j].y_loc, 2) + numpy.power(obj_list[i].x_loc - obj_list[j].x_loc,2) + numpy.power(obj_list[i].z_loc - obj_list[j].z_loc,2))
+            dist_mat[i, j] = (abs(obj_list[i].y_loc - obj_list[j].y_loc) + abs(obj_list[i].x_loc - obj_list[j].x_loc) + abs(obj_list[i].z_loc - obj_list[j].z_loc))
     return dist_mat
+
+
 
 def get_initial_papas(dist_mat, num_items, dist_mat_e):   # updated
     max_val = 0
@@ -115,16 +117,11 @@ def get_results(obj_list, num_items, num_sets):
 
 def find_max_min(all_sets, dist_mat):
     max_min = 0
-    best_k = -1
-    best_j = -1
     for i in all_sets:
         for j in i:
             for k in i:
                 if dist_mat[j-1, k-1] > max_min:
                     max_min = dist_mat[j-1, k-1]
-                    best_j = j
-                    best_k = k
-    print(best_j, best_k)
     return max_min
 
 def run_algo(filepath):
@@ -140,7 +137,7 @@ def run_algo(filepath):
     set_sets(no_no_list, obj_list)
     create_sets(dist_mat, no_no_list, num_items, obj_list, dist_mat_e) # updated
     all_sets = get_results(obj_list, num_items, num_sets)
-    max_min = find_max_min(all_sets, dist_mat)
+    max_min = find_max_min(all_sets, dist_mat_e)
     print(no_no_list)
 
     print(max_min)
